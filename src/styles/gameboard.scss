@@ -1,0 +1,11 @@
+#game-board-root {
+    position: relative;
+    width: 600px;
+    height: 720px;
+
+    .game-board {
+        display: flex;
+        flex-flow: row wrap;
+        user-select: none;
+    }
+}
