@@ -16,7 +16,16 @@ const generateGrid = () => {
     
     for (let y = 0; y < 12; y++) 
         for (let x = 0; x < 8; x++) 
-            grid[y][x] = <GameTile width={tileWidth} height={tileHeight} selfX={x} selfY={y} value={getRandom(1, 4)} isActive={false} />; 
+            grid[y][x] = 
+            <GameTile 
+                width={tileWidth} 
+                height={tileHeight} 
+                selfX={x} 
+                selfY={y} 
+                value={getRandom(1, 4)} 
+                isActive={false} 
+                joiningStyle={"dot"}
+            />; 
     
     return grid;
 }
@@ -25,7 +34,8 @@ export const InitialGameState = {
     GameGrid: generateGrid(),
     StartTile: { x: -1, y: -1 },
     CurrentTile: { x: -1, y: -1 },
-    StartTileType: "none"
+    StartTileType: "none",
+    IsDragging: false
 }
 
 export default InitialGameState;

@@ -1,10 +1,21 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import "./../styles/gametile.scss";
 
-export const GameTile = ({ width, height, selfX, selfY, isActive, isDragging, value, state, dispatch }) => {
+export const GameTile = ({ 
+        width, 
+        height, 
+        selfX, 
+        selfY, 
+        isActive, 
+        value, 
+        state, 
+        dispatch, 
+        joiningStyle 
+    }) => {
+
     const [overTile, setOverTile] = useState(false);
     const [nextTile, setNextTile] = useState(null);
-    const [joiningStyle, setJoiningStyle] = useState("dot");
+
     const tile = useRef(null);
 
     const style = {
@@ -16,12 +27,22 @@ export const GameTile = ({ width, height, selfX, selfY, isActive, isDragging, va
         let exit = getExitDirection(offsetX, offsetY, clientHeight, clientWidth);
         console.log(exit);
         switch(exit) {
-            case "top": dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX, y: selfY - 1 } }); break;
-            case "right": dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX + 1, y: selfY } }); break;
-            case "bottom": dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX, y: selfY + 1 } }); break;
-            case "left": dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX - 1, y: selfY } }); break;
-            default: throw Error("INVALID DIRECTION RECEIVED WHEN LEAVING TILE");
+            case "up": 
+                dispatch({ type: "ADD_JOINING_TILE", payload: { x: selfX, y: selfY - 1, joiningStyle: "vertical-up" } }); 
+                break;
+            case "right": 
+                dispatch({ type: "ADD_JOINING_TILE", payload: { x: selfX + 1, y: selfY, joiningStyle: "horizontal-right" } }); 
+                break;
+            case "down": 
+                dispatch({ type: "ADD_JOINING_TILE", payload: { x: selfX, y: selfY + 1, joiningStyle: "vertical-down" } }); 
+                break;
+            case "left": 
+                dispatch({ type: "ADD_JOINING_TILE", payload: { x: selfX - 1, y: selfY, joiningStyle: "horizontal-left" } }); 
+                break;
+            default: 
+                throw Error("INVALID DIRECTION RECEIVED WHEN LEAVING TILE");
         }
+        
     }, [tile, state, dispatch]);
 
     const mouseEnterHandler = useCallback((e) => {
@@ -30,34 +51,33 @@ export const GameTile = ({ width, height, selfX, selfY, isActive, isDragging, va
 
     const mouseClickHandler = useCallback((e) => {
         dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY } });
-        dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX, y: selfY } });
     }, [dispatch]);
 
     const getExitDirection = (x, y, width = 75, height = 60) => {
-        if (y < -0.5) return "top";
-        if (y > 59.5) return "bottom";
+        if (y < -0.5) return "up";
+        if (y > 59.5) return "down";
         if (x < -0.5) return "left";
         if (x > 74) return "right";
     };
 
     useEffect(() => {
-        if (overTile && !isDragging) {
+        if (overTile && !state.IsDragging) {
             setOverTile(false);
             setJoiningStyle("dot");
         }
-    }, [isDragging, joiningStyle]);
+    }, [state.IsDragging, joiningStyle]);
 
     useEffect(() => {
-        if (!isDragging) {
+        if (!state.IsDragging) {
             tile.current.addEventListener("pointerdown", mouseClickHandler);
         } 
 
         return () => {
-            if (!isDragging) {
+            if (!state.IsDragging) {
                 tile.current.removeEventListener("pointerdown", mouseClickHandler);
             } 
         }
-    }, [isDragging, tile, mouseClickHandler]);
+    }, [state.IsDragging, tile, mouseClickHandler]);
 
     useEffect(() => {
         if (state.CurrentTile.x === selfX && state.CurrentTile.y === selfY) {
@@ -75,7 +95,7 @@ export const GameTile = ({ width, height, selfX, selfY, isActive, isDragging, va
         <div ref={tile} style={style} className={`game-tile bg-green-400`}>
             <div className={"text-xs"}>{value},&nbsp;{joiningStyle}</div>
             <div className={"text-xs"}>{selfX},&nbsp;{selfY}</div>
-            { isDragging && isActive &&
+            { state.IsDragging && isActive &&
                 <div className={`tile-selected ${joiningStyle}`} />
             }
         </div>
