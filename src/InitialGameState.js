@@ -24,7 +24,8 @@ const generateGrid = () => {
 export const InitialGameState = {
     GameGrid: generateGrid(),
     StartTile: { x: -1, y: -1 },
-    CurrentTile: { x: -1, y: -1 }
+    CurrentTile: { x: -1, y: -1 },
+    StartTileType: "none"
 }
 
 export default InitialGameState;

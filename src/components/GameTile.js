@@ -14,27 +14,21 @@ export const GameTile = ({ width, height, selfX, selfY, isDragging, value, state
 
     const mouseMoveHandler = useCallback((e) => {
         if (isDragging) {
-            if (state.StartTile.x < 0 && state.StartTile.y < 0) {
-                dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY } });
-                dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX, y: selfY } });
-            } else {
-                if (state.CurrentTile.x > selfX) {
-                    setJoiningStyle("horizontal-left");
-                } 
-                else if (state.CurrentTile.x < selfX) {
-                    setJoiningStyle("horizontal-right");
-                } 
-                else if(state.CurrentTile.y > selfY) {
-                    setJoiningStyle("vertical-up");
-                }
-                else if(state.CurrentTile.y < selfY) {
-                    setJoiningStyle("vertical-down");
-                }
-                dispatch({ type: "SET_CURRENT_TILE", payload: { x: selfX, y: selfY } });
-            }
-            setOverTile(true);
+            
         }
     }, [isDragging, state, dispatch]);
+
+    const mouseLeaveHandler = useCallback(({ offsetX, offsetY, target: { clientWidth, clientHeight } }) => {
+        let exit = getExitDirection(offsetX, offsetY, clientHeight, clientWidth);
+        console.log(exit);
+    }, [tile, state]);
+
+    const getExitDirection = (x, y, width = 75, height = 60) => {
+        if (y < -0.5) return "top";
+        if (y > 59.5) return "bottom";
+        if (x < -0.5) return "left";
+        if (x > 74) return "right";
+    };
 
     useEffect(() => {
         if (overTile && !isDragging) {
@@ -44,14 +38,12 @@ export const GameTile = ({ width, height, selfX, selfY, isDragging, value, state
     }, [isDragging, joiningStyle]);
 
     useEffect(() => {
-        tile.current.addEventListener("mousemove", mouseMoveHandler);
-        tile.current.addEventListener("mousedown", mouseMoveHandler);
+        tile.current.addEventListener("pointerleave", mouseLeaveHandler);
 
-        return () =>{
-            tile.current.removeEventListener("mousemove", mouseMoveHandler);
-            tile.current.removeEventListener("mousedown", mouseMoveHandler);
+        return () => {
+            tile.current.removeEventListener("pointerleave", mouseLeaveHandler);
         }
-    }, [tile, mouseMoveHandler]);
+    }, [tile, mouseLeaveHandler]);
 
     return (
         <div ref={tile} style={style} className={`game-tile bg-green-400`}>

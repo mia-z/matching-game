@@ -8,6 +8,10 @@ export const GameStateReducer = (state, action) => {
             CurrentTile: action.payload
         }
 
+        case "SET_START_TILE_TYPE": return { ...state,
+            StartTileType: action.payload
+        }
+
         case "UNSET_START_TILE": return { ...state,
             StartTile: { x: -1, y: -1 }
         }
@@ -15,6 +19,10 @@ export const GameStateReducer = (state, action) => {
         case "UNSET_CURRENT_TILE": return { ...state,
             CurrentTile: { x: -1, y: -1 }
         }    
+
+        case "UNSET_START_TILE_TYPE": return { ...state,
+            StartTileType: "none"
+        }
 
         case "ADD_SELECTED_TILE": return { ...state,
             SelectedTiles: [ ...state.SelectedTiles, action.payload ]
