@@ -16,7 +16,7 @@ const generateGrid = () => {
     
     for (let y = 0; y < 12; y++) 
         for (let x = 0; x < 8; x++) 
-            grid[y][x] = <GameTile width={tileWidth} height={tileHeight} selfX={x} selfY={y} value={getRandom(1, 4)} />; 
+            grid[y][x] = <GameTile width={tileWidth} height={tileHeight} selfX={x} selfY={y} value={getRandom(1, 4)} isActive={false} />; 
     
     return grid;
 }

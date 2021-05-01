@@ -12,6 +12,14 @@ export const GameStateReducer = (state, action) => {
             StartTileType: action.payload
         }
 
+        case "SET_TILE_ACTIVE": 
+            state.GameGrid[action.payload.y][action.payload.x].isActive = true;
+            return { ...state,
+                GameGrid: [
+                    ...state.GameGrid 
+                ]
+            }
+
         case "UNSET_START_TILE": return { ...state,
             StartTile: { x: -1, y: -1 }
         }
