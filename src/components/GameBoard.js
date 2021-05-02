@@ -11,9 +11,6 @@ export const GameBoard = ({state, dispatch, grid}) => {
 
     const stopDragging = useCallback((e) => {
         dispatch({ type: "DRAG_END" });
-
-        //dispatch({ type: "UNSET_START_TILE" });
-        //dispatch({ type: "UNSET_CURRENT_TILE" });
     }, [dispatch]);
 
     useEffect(() => {
@@ -25,11 +22,9 @@ export const GameBoard = ({state, dispatch, grid}) => {
             board.current.removeEventListener("mouseup", stopDragging);
         }
     }, [startDragging, stopDragging]);
-console.log(state.GameGrid);
+
     return (
         <div id={"game-board-root"} className={"bg-red-400"}>
-            {state.IsDragging ? "down" : "up"}
-            <div>StartTile:&nbsp;({state.StartTile.x}, {state.StartTile.y}), CurrentTile:&nbsp;({state.CurrentTile.x}, {state.CurrentTile.y})</div>
             <div ref={board} className={"game-board"}>
             {
                 grid.map((outer, outerIndex, outerArray) => (
@@ -37,7 +32,7 @@ console.log(state.GameGrid);
                     {
                         outer.map((inner, innerIndex, innerArray) => (
                             <React.Fragment key={`x-${innerIndex}`}>
-                                <GameTile {...inner.props} state={state} dispatch={dispatch}/>
+                                <GameTile {...inner} state={state} dispatch={dispatch}/>
                             </React.Fragment>
                         ))
                     }

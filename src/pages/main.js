@@ -4,14 +4,33 @@ import "./../styles/base.scss";
 import { InitialGameState } from "./../InitialGameState";
 import GameBoard from "../components/GameBoard";
 
-
 const Main = () => {
     const [gameState, gameDispatch] = useReducer(GameStateReducer, InitialGameState);
 
-    return(
-        <div className={"mx-auto container flex justify-center"}>
-            <GameBoard grid={gameState.GameGrid} state={gameState} dispatch={gameDispatch}/>
-        </div>
+    return (
+        <>
+            <div className={"debug-box flex flex-col"}>
+                {
+                    gameState.IsDragging ? 
+                    <div className={"bg-red-400 text-right"}>down</div> : 
+                    <div className={"bg-green-400 text-right"}>up</div>
+                }
+                <div>
+                    StartTile:&nbsp;({gameState.StartTile.x}, {gameState.StartTile.y}), 
+                    CurrentTile:&nbsp;({gameState.CurrentTile.x}, {gameState.CurrentTile.y})
+                </div>
+                {
+                    gameState.SelectedTiles.map(({ selfX, selfY, tileType, isActive}) => (
+                        <div key={`${selfX}${selfY}`}>
+                            {tileType}-{isActive} -- ({selfX}, {selfY})
+                        </div>
+                    ))
+                }
+            </div>
+            <div className={"mx-auto container flex justify-center"}>
+                <GameBoard grid={gameState.GameGrid} state={gameState} dispatch={gameDispatch}/>
+            </div>
+        </>   
     )
 }
 
