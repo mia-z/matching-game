@@ -99,7 +99,7 @@ export const GameTile = ({
     }, [state, selfX, selfY, mouseLeaveHandler]);
 
     return (
-        <div ref={tile} style={style} className={`game-tile ${tileType}`}>
+        <div ref={tile} style={style} className={`game-tile ${tileType} glossy-green`}>
             <div className={"text-xs"}>{selfX},&nbsp;{selfY}</div>
             { state.IsDragging && isActive &&
                 <div className={`tile-selected ${joiningStyle}`} />
