@@ -9,7 +9,12 @@ module.exports = merge(common, {
     mode: "production",
     output: {
         path: path.join(ROOT, "/build"),
-        filename: "[name].[contenthash].bundle.js"
+        filename: "[name].bundle.js"
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
     },
     plugins: [new CleanWebpackPlugin()]
 })
