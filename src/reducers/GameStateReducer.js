@@ -1,3 +1,5 @@
+import TileReplacer from "../gamelogic/TileReplacer";
+
 export const GameStateReducer = (state, action) => {
     switch(action.type) {
         case "SET_START_TILE": 
@@ -64,7 +66,7 @@ export const GameStateReducer = (state, action) => {
             CurrentTile: { x: -1, y: -1 },
             StartTileType: "none",
             SelectedTiles: [],
-            GameGrid: makeTilesInactive(state.GameGrid)
+            GameGrid: state.SelectedTiles.length > 2 ? TileReplacer(state.GameGrid, state.SelectedTiles) : makeTilesInactive(state.GameGrid)
         }
 
         default: throw new Error("INVALID action.type GIVEN IN GameStateReducer - RECEIVED: " + action.type);
