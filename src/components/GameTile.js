@@ -101,7 +101,6 @@ export const GameTile = ({
     return (
         <div ref={tile} style={style} className={`game-tile`}>
             <div className={`wrapper ${tileType}`}>
-                <div className={"text-xs"}>{selfX},&nbsp;{selfY}</div>
                 { state.IsDragging && isActive &&
                     <div className={`tile-selected ${joiningStyle}`} />
                 }

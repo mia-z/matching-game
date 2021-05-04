@@ -4,7 +4,8 @@ import GameTile from "./GameTile";
 
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
-
+    const canvas = useRef(null);
+    
     const startDragging = useCallback((e) => {
         dispatch({ type: "DRAG_START" });
     }, [dispatch]);
@@ -24,21 +25,24 @@ export const GameBoard = ({state, dispatch, grid}) => {
     }, [startDragging, stopDragging]);
 
     return (
-        <div id={"game-board-root"} className={""}>
-            <div ref={board} className={"game-board"}>
-            {
-                grid.map((outer, outerIndex, outerArray) => (
-                    <React.Fragment key={`y-${outerIndex}`}>
-                    {
-                        outer.map((inner, innerIndex, innerArray) => (
-                            <React.Fragment key={`x-${innerIndex}`}>
-                                <GameTile {...inner} state={state} dispatch={dispatch}/>
-                            </React.Fragment>
-                        ))
-                    }
-                    </React.Fragment>
-                ))
-            }
+        <div>
+            <div id={"game-board-root"} className={""}>
+                <canvas ref={canvas} id={"overlay"} className={"overlay-canvas"} />
+                <div ref={board} className={"game-board"}>
+                {
+                    grid.map((outer, outerIndex, outerArray) => (
+                        <React.Fragment key={`y-${outerIndex}`}>
+                        {
+                            outer.map((inner, innerIndex, innerArray) => (
+                                <React.Fragment key={`x-${innerIndex}`}>
+                                    <GameTile {...inner} state={state} dispatch={dispatch}/>
+                                </React.Fragment>
+                            ))
+                        }
+                        </React.Fragment>
+                    ))
+                }
+                </div>
             </div>
         </div>
     );
