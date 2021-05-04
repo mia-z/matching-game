@@ -24,7 +24,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
     }, [startDragging, stopDragging]);
 
     return (
-        <div id={"game-board-root"} className={"bg-red-400"}>
+        <div id={"game-board-root"} className={""}>
             <div ref={board} className={"game-board"}>
             {
                 grid.map((outer, outerIndex, outerArray) => (

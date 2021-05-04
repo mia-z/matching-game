@@ -1,64 +1,73 @@
+@import "./mixins";
+
 .game-tile {
     position: relative;
     padding: 2px;
+    border-radius: 6px;
 
-    &.down {
-        background-color: red;
-    }
+    &:hover {
+        border: 2px solid #ecf0f1;
+    } 
 
-    &.purple {
-        background-color: purple;
-    }
-
-    &.blue {
-        background-color: blue;
-    }
-
-    &.green {
-        background-color: green;
-    }
-
-    .tile-selected {
-        position: absolute;
-        background-color: red;
-        z-index: 10;
-        border-radius: 25px;
-
-        &.dot {
-            left: 40%;
-            top: 40%;
-            width: 20%;
-            height: 25.2%;
+    .wrapper {
+        height: 100%;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+        &.purple {
+            @include glossy(#8e44ad, #9b59b6, #8e44ad);
+        }
+    
+        &.blue {
+            @include glossy(#2980b9, #3498db, #2980b9);
+        }
+    
+        &.green {
+            @include glossy(#27ae60, #2ecc71, #27ae60);
         }
 
-        &.horizontal-left {
-            left: 40%;
-            top: 40%;
-            width: 120%;
-            height: 25.2%;
-        }
+        .tile-selected {
+            position: absolute;
+            background-color: #ecf0f1;
+            z-index: 10;
+            border-radius: 25px;
 
-        &.horizontal-right {
-            left: -60%;
-            top: 40%;
-            width: 120%;
-            height: 25.2%;
-        }
-
-        &.vertical-down {
-            left: 40%;
-            top: -50%;
-            width: 20%;
-            height: 113%;
-        }
-
-        &.vertical-up {
-            left: 40%;
-            top: 50%;
-            width: 20%;
-            height: 113%;
+            &.dot {
+                left: 40%;
+                top: 40%;
+                width: 20%;
+                height: 25.2%;
+            }
+    
+            &.horizontal-left {
+                left: 40%;
+                top: 40%;
+                width: 120%;
+                height: 25.2%;
+            }
+    
+            &.horizontal-right {
+                left: -60%;
+                top: 40%;
+                width: 120%;
+                height: 25.2%;
+            }
+    
+            &.vertical-down {
+                left: 40%;
+                top: -50%;
+                width: 20%;
+                height: 113%;
+            }
+    
+            &.vertical-up {
+                left: 40%;
+                top: 50%;
+                width: 20%;
+                height: 113%;
+            }
         }
     }
+    
 }
 
 .glossy-green {
