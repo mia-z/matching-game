@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, useRef } from "react";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 import "./../styles/gametile.scss";
 import { NextCoordinatesFromDirection } from "./../gamelogic/Utils";
-import { DrawStart, DrawJoiningLine } from "./../gamelogic/OverlayControls";
+import { DrawStart, DrawJoiningLine, RemoveJoiningLine } from "./../gamelogic/OverlayControls";
 
 export const GameTile = ({ 
         width, 
@@ -27,20 +27,21 @@ export const GameTile = ({
     };
 
     const mouseLeaveHandler = useCallback(({ offsetX, offsetY, target: { clientWidth, clientHeight } }) => {
-        let exit = getExitDirection(offsetX, offsetY, clientHeight, clientWidth);
+        let direction = getExitDirection(offsetX, offsetY, clientHeight, clientWidth);
 
-        let nextCoords = NextCoordinatesFromDirection(selfX, selfY, exit);
+        let nextCoords = NextCoordinatesFromDirection(selfX, selfY, direction);
 
         let nextTileReturnCode = CheckNextTile(nextCoords.x, nextCoords.y, tileType, state.GameGrid, state.SelectedTiles);
 
         if (nextTileReturnCode === 2) {
             console.log("meme");
+            RemoveJoiningLine(canvas.current, selfX, selfY, nextCoords.x, nextCoords.y, direction);
             return dispatch({ type: "REMOVE_JOINING_TILE", payload: { x: selfX, y: selfY } }); 
         }
 
         if (nextTileReturnCode === 1) {
             DrawJoiningLine(canvas.current, selfX, selfY, nextCoords.x, nextCoords.y);
-            return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y, joiningStyle: getJoiningDirection(exit) } }); 
+            return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y, joiningStyle: getJoiningDirection(direction) } }); 
         }
 
     }, [tile, state, dispatch, selfX, selfY, tileType]);
