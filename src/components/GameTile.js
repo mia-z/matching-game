@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useRef } from "react";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 import "./../styles/gametile.scss";
 import { NextCoordinatesFromDirection } from "./../gamelogic/Utils";
+import { DrawStart, DrawJoiningLine } from "./../gamelogic/OverlayControls";
 
 export const GameTile = ({ 
         width, 
@@ -12,7 +13,8 @@ export const GameTile = ({
         tileType, 
         state, 
         dispatch, 
-        joiningStyle 
+        joiningStyle,
+        canvas
     }) => {
 
     const [overTile, setOverTile] = useState(false);
@@ -37,6 +39,7 @@ export const GameTile = ({
         }
 
         if (nextTileReturnCode === 1) {
+            DrawJoiningLine(canvas.current, selfX, selfY, nextCoords.x, nextCoords.y);
             return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y, joiningStyle: getJoiningDirection(exit) } }); 
         }
 
@@ -48,6 +51,7 @@ export const GameTile = ({
 
     const mouseClickHandler = useCallback((e) => {
         dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY } });
+        DrawStart(canvas.current, selfX, selfY);
     }, [dispatch]);
 
     const getJoiningDirection = (dir) => {

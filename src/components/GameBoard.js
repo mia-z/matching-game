@@ -1,17 +1,21 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import "./../styles/gameboard.scss";
 import GameTile from "./GameTile";
+import { ClearCanvas } from "./../gamelogic/OverlayControls";
 
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
     const canvas = useRef(null);
-    
+
+    const [canvasContext, setCanvasContext] = useState(null);
+
     const startDragging = useCallback((e) => {
         dispatch({ type: "DRAG_START" });
     }, [dispatch]);
 
     const stopDragging = useCallback((e) => {
         dispatch({ type: "DRAG_END" });
+        ClearCanvas(canvas.current);
     }, [dispatch]);
 
     useEffect(() => {
@@ -23,11 +27,11 @@ export const GameBoard = ({state, dispatch, grid}) => {
             board.current.removeEventListener("mouseup", stopDragging);
         }
     }, [startDragging, stopDragging]);
-
+    
     return (
         <div>
             <div id={"game-board-root"} className={""}>
-                <canvas ref={canvas} id={"overlay"} className={"overlay-canvas"} />
+                <canvas ref={canvas} height={726} width={606} id={"overlay"} className={"overlay-canvas"} />
                 <div ref={board} className={"game-board"}>
                 {
                     grid.map((outer, outerIndex, outerArray) => (
@@ -35,7 +39,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
                         {
                             outer.map((inner, innerIndex, innerArray) => (
                                 <React.Fragment key={`x-${innerIndex}`}>
-                                    <GameTile {...inner} state={state} dispatch={dispatch}/>
+                                    <GameTile {...inner} canvas={canvas} state={state} dispatch={dispatch}/>
                                 </React.Fragment>
                             ))
                         }
