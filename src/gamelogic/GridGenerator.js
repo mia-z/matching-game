@@ -1,5 +1,4 @@
 import TileGenerator from "./TileGenerator";
-import TileTypeGenerator from "./TileTypeGenerator";
 
 export const GridGenerator = (gridY = 12, gridX = 8, boardHeight = 720, boardWidth = 600) => {
     let grid = Array.from(Array(gridY), () => new Array(gridX));

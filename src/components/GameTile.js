@@ -13,8 +13,8 @@ export const GameTile = ({
         tileType, 
         state, 
         dispatch, 
-        joiningStyle,
-        canvas
+        canvas,
+        iconPath
     }) => {
 
     const [overTile, setOverTile] = useState(false);
@@ -75,9 +75,8 @@ export const GameTile = ({
     useEffect(() => {
         if (overTile && !state.IsDragging) {
             setOverTile(false);
-            setJoiningStyle("dot");
         }
-    }, [state.IsDragging, joiningStyle]);
+    }, [state.IsDragging]);
 
     useEffect(() => {
         if (!state.IsDragging) {
@@ -105,10 +104,11 @@ export const GameTile = ({
 
     return (
         <div ref={tile} style={style} className={`game-tile`}>
-            <div className={`wrapper ${tileType}`}>
+            <div className={`game-tile-wrapper ${tileType}`}>
                 { state.IsDragging && isActive &&
-                    <div className={`tile-selected ${joiningStyle}`} />
+                    <div className={`tile-selected`} />
                 }
+                <img className={""} src={iconPath} />
             </div>
         </div>
     );
