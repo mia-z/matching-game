@@ -13,25 +13,7 @@
         height: 100%;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
-        &.grey {
-            @include glossy(#2d3436, #636e72, #2d3436);
-        }
-    
-        &.blue {
-            @include glossy(#0984e3, #74b9ff, #0984e3);
-        }
-    
-        &.red {
-            @include glossy(#d63031, #ff7675, #d63031);
-        }
-
-        &.yellow {
-            @include glossy(#fdcb6e, #ffeaa7, #fdcb6e);
-        }
-
-        &.white {
-            @include glossy(#b2bec3, #dfe6e9, #b2bec3);
-        }
+        
 
         .tile-selected {
             position: absolute;
@@ -44,6 +26,38 @@
             height: 100%;
             width: 100%;
             pointer-events: none;
+        }
+
+        &.enemy {
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 15px;
+                height: 80px;
+                border-radius: 20px;
+                background-color: rgba(99, 110, 114, 0.9);
+            }
+        }
+
+        .enemy-health {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: #00cec9;
+            font-size: 1.5rem;
+
+            
+        }
+
+        .enemy-damage {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            color: #e17055;
+            font-size: 1.5rem;
         }
     }
     

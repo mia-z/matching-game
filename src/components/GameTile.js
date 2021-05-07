@@ -15,7 +15,10 @@ export const GameTile = ({
         dispatch, 
         canvas,
         iconPath,
-        debugColor
+        debugColor,
+        isEnemy,
+        enemyHealth,
+        enemyDamage
     }) => {
 
     const [overTile, setOverTile] = useState(false);
@@ -90,6 +93,18 @@ export const GameTile = ({
             <div className={`game-tile-wrapper ${tileType}`}>
                 { state.IsDragging && isActive &&
                     <div className={`tile-selected`} />
+                }
+                {
+                    isEnemy &&
+                    <>
+                        <div className={"enemy-health"}>
+                            <div>{enemyHealth}</div>
+                        </div>
+                        <div className={"enemy-damage"}>
+                            <div>{enemyDamage}</div>
+                        </div>
+                    </> 
+                    
                 }
                 <img className={""} src={iconPath} />
             </div>

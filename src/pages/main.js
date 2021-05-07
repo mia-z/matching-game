@@ -1,8 +1,10 @@
 import React, { useReducer } from "react";
 import GameStateReducer from "../reducers/GameStateReducer";
 import "./../styles/base.scss";
+import "./../styles/bootstrap-variants.scss";
 import { InitialGameState } from "./../InitialGameState";
 import GameBoard from "../components/GameBoard";
+import InfoBox from "../components/InfoBox";
 
 const Main = () => {
     const [gameState, gameDispatch] = useReducer(GameStateReducer, InitialGameState);
@@ -29,6 +31,9 @@ const Main = () => {
             </div>
             <div className={"mx-auto container flex justify-center"}>
                 <GameBoard grid={gameState.GameGrid} state={gameState} dispatch={gameDispatch}/>
+            </div>
+            <div className={"mx-auto container flex justify-center"}>
+                <InfoBox score={gameState.Score} dispatch={gameDispatch} />
             </div>
         </>   
     )

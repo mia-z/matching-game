@@ -38,7 +38,6 @@ export const RemoveJoiningLine = (k, drawStartX, drawStartY, drawEndX, drawEndY,
     k.lines[k.lines.length-1].destroy();
     k.lines.pop();
     k.layer.draw();
-    console.log(k.layer.getChildren());
 }
 
 export const ClearCanvas = (k) => {

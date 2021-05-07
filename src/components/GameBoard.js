@@ -3,6 +3,7 @@ import "./../styles/gameboard.scss";
 import GameTile from "./GameTile";
 import { ClearCanvas } from "./../gamelogic/OverlayControls";
 import Konva from "konva";
+import EndTurnChecker from "../gamelogic/EndTurnChecker";
 
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
@@ -17,7 +18,8 @@ export const GameBoard = ({state, dispatch, grid}) => {
     const stopDragging = useCallback((e) => {
         dispatch({ type: "DRAG_END" });
         ClearCanvas(konva);
-    }, [dispatch, konva]);
+        EndTurnChecker(state, dispatch);
+    }, [dispatch, konva, state]);
 
     useEffect(() => {
         let stage = new Konva.Stage({
