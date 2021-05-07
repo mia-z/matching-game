@@ -1,6 +1,6 @@
 import TileGenerator from "./TileGenerator";
 
-export const GridGenerator = (gridY = 12, gridX = 8, boardHeight = 720, boardWidth = 600) => {
+export const GridGenerator = (gridY = 8, gridX = 8, boardHeight = 720, boardWidth = 720) => {
     let grid = Array.from(Array(gridY), () => new Array(gridX));
 
     let tileWidth = boardWidth / gridX;

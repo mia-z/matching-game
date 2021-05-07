@@ -15,35 +15,35 @@ export const NextCoordinatesFromDirection = (x, y, direction) => {
 
 export const GetExitDirection = (x, y, width = 75, height = 60) => {
     if (y <= -0.5) {
-        if (x <= 15) 
+        if (x <= 20) 
             return "left-up";
-        else if (x >= 60) 
+        else if (x >= 70) 
             return "right-up";
         else
             return "up";
     }
 
-    if (y > 59.5) {
-        if (x <= 15) 
+    if (y > 89) {
+        if (x <= 20) 
             return "left-down";
-        else if (x >= 60) 
+        else if (x >= 70) 
             return "right-down";
         else
             return "down";
     }
 
-    if (x <= 1.5) {
-        if (y <= 10) 
+    if (x <= -0.5) {
+        if (y <= 20) 
             return "left-up";
-        else if (y >= 45) 
+        else if (y >= 70) 
             return "left-down";
         else
             return "left";
     }
-    if (x > 74) {
-        if (y <= 10) 
+    if (x > 89) {
+        if (y <= 20) 
             return "right-up";
-        else if (y >= 45) 
+        else if (y >= 70) 
             return "right-down";
         else
             return "right";

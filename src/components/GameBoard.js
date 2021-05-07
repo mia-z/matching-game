@@ -22,7 +22,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
     useEffect(() => {
         let stage = new Konva.Stage({
             container: canvas.current.id,
-            width: 606,
+            width: 726,
             height: 726
         });
         let layer = new Konva.Layer();
@@ -43,7 +43,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
     return (
         <div>
             <div id={"game-board-root"} className={""}>
-                <div ref={canvas} height={726} width={606} id={"overlay"} className={"overlay-canvas"} />
+                <div ref={canvas} height={726} width={726} id={"overlay"} className={"overlay-canvas"} />
                 <div ref={board} className={"game-board"}>
                 {
                     grid.map((outer, outerIndex, outerArray) => (

@@ -1,9 +1,9 @@
 import Konva from "konva";
 
-const TILE_HEIGHT = 60;
-const TILE_WIDTH = 75.0;
+const TILE_HEIGHT = 90.0;
+const TILE_WIDTH = 90.0;
 
-const getWidthOffset = (offset) => (offset * TILE_WIDTH) + (TILE_WIDTH*1.0 / 2) + (0.75 * offset);
+const getWidthOffset = (offset) => (offset * TILE_WIDTH) + (TILE_WIDTH*1.0 / 2) + (0.5 * offset);
 const getHeightOffset = (offset) => (offset * TILE_HEIGHT) + (TILE_HEIGHT*1.0 / 2) + (0.5 * offset);
 
 export const DrawStart = (k, drawStartX, drawStartY) => {
