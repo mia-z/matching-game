@@ -3,7 +3,6 @@ import CheckNextTile from "./../gamelogic/CheckNextTile";
 import "./../styles/gametile.scss";
 import { NextCoordinatesFromDirection, GetExitDirection } from "./../gamelogic/Utils";
 import { DrawStart, DrawJoiningLine, RemoveJoiningLine } from "./../gamelogic/OverlayControls";
-import Konva from "konva";
 
 export const GameTile = ({ 
         width, 

@@ -39,7 +39,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
             board.current.removeEventListener("mouseup", stopDragging);
         }
     }, [startDragging, stopDragging]);
-    console.log(konva);
+
     return (
         <div>
             <div id={"game-board-root"} className={""}>
