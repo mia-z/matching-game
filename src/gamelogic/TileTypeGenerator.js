@@ -27,7 +27,10 @@ export const TileTypeGenerator = (t) => {
         case 5: return {
             tileType: "enemy", 
             iconPath: icon.Enemy,
-            debugColor: "white"
+            debugColor: "white",
+            isEnemy: true,
+            enemyHealth: RandomNumberGenerator(1, 5),
+            enemyDamage: 1,
         };
         default: throw new Error("INVALID RANDOM GENERATED @ TileTypeGenerator in TileTypeGenerator")
     }

@@ -65,7 +65,17 @@ export const GameStateReducer = (state, action) => {
             CurrentTile: { x: -1, y: -1 },
             StartTileType: "none",
             SelectedTiles: [],
-            GameGrid: state.SelectedTiles.length > 2 ? TileReplacer(state.GameGrid, state.SelectedTiles) : TileDeactivator(state.GameGrid)
+            GameGrid: state.SelectedTiles.length > 2 ? TileReplacer(state.GameGrid, state.SelectedTiles, state.Score.BaseDamage) : TileDeactivator(state.GameGrid)
+        }
+
+        case "UPDATE_STAT": {
+            return {
+                ...state,
+                Score: {
+                    ...state.Score,
+                    [action.payload.key]: action.payload.value 
+                }
+            }
         }
 
         default: throw new Error("INVALID action.type GIVEN IN GameStateReducer - RECEIVED: " + action.type);
