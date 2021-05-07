@@ -21,8 +21,7 @@ export const GameStateReducer = (state, action) => {
             let newGrid = state.GameGrid;
             newGrid[action.payload.y][action.payload.x] = {
                 ...newGrid[action.payload.y][action.payload.x],
-                isActive: true,
-                joiningStyle: action.payload.joiningStyle
+                isActive: true
             }
             return { ...state,
                 CurrentTile: action.payload,
@@ -35,8 +34,7 @@ export const GameStateReducer = (state, action) => {
             let newGrid = state.GameGrid;
             newGrid[action.payload.y][action.payload.x] = {
                 ...newGrid[action.payload.y][action.payload.x],
-                isActive: false,
-                joiningStyle: "dot"
+                isActive: false
             }
 
             let tileToRemove = state.SelectedTiles.find(tile => {

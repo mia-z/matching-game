@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 import "./../styles/gametile.scss";
-import { NextCoordinatesFromDirection } from "./../gamelogic/Utils";
+import { NextCoordinatesFromDirection, GetExitDirection } from "./../gamelogic/Utils";
 import { DrawStart, DrawJoiningLine, RemoveJoiningLine } from "./../gamelogic/OverlayControls";
+import Konva from "konva";
 
 export const GameTile = ({ 
         width, 
@@ -14,7 +15,8 @@ export const GameTile = ({
         state, 
         dispatch, 
         canvas,
-        iconPath
+        iconPath,
+        debugColor
     }) => {
 
     const [overTile, setOverTile] = useState(false);
@@ -27,21 +29,20 @@ export const GameTile = ({
     };
 
     const mouseLeaveHandler = useCallback(({ offsetX, offsetY, target: { clientWidth, clientHeight } }) => {
-        let direction = getExitDirection(offsetX, offsetY, clientHeight, clientWidth);
-
+        let direction = GetExitDirection(offsetX, offsetY, clientHeight, clientWidth);
+console.log(offsetX, offsetY);
         let nextCoords = NextCoordinatesFromDirection(selfX, selfY, direction);
 
-        let nextTileReturnCode = CheckNextTile(nextCoords.x, nextCoords.y, tileType, state.GameGrid, state.SelectedTiles);
+        let nextTileReturnCode = CheckNextTile(selfX, selfY, nextCoords.x, nextCoords.y, tileType, state.GameGrid, state.SelectedTiles);
 
         if (nextTileReturnCode === 2) {
-            console.log("meme");
-            RemoveJoiningLine(canvas.current, selfX, selfY, nextCoords.x, nextCoords.y, direction);
+            RemoveJoiningLine(canvas, selfX, selfY, nextCoords.x, nextCoords.y, direction);
             return dispatch({ type: "REMOVE_JOINING_TILE", payload: { x: selfX, y: selfY } }); 
         }
 
         if (nextTileReturnCode === 1) {
-            DrawJoiningLine(canvas.current, selfX, selfY, nextCoords.x, nextCoords.y);
-            return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y, joiningStyle: getJoiningDirection(direction) } }); 
+            DrawJoiningLine(canvas, selfX, selfY, nextCoords.x, nextCoords.y);
+            return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y } }); 
         }
 
     }, [tile, state, dispatch, selfX, selfY, tileType]);
@@ -52,25 +53,8 @@ export const GameTile = ({
 
     const mouseClickHandler = useCallback((e) => {
         dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY } });
-        DrawStart(canvas.current, selfX, selfY);
-    }, [dispatch]);
-
-    const getJoiningDirection = (dir) => {
-        switch(dir) {
-            case "up": return "vertical-up";
-            case "right": return "horizontal-right";
-            case "down": return "vertical-down";
-            case "left": return "horizontal-left";
-            default: throw new Error("INVALID JOINING DIRECTION GIVEN @ getJoiningDirection IN GameTile.js");
-        }
-    }
-
-    const getExitDirection = (x, y, width = 75, height = 60) => {
-        if (y < -0.5) return "up";
-        if (y > 59.5) return "down";
-        if (x < -0.5) return "left";
-        if (x > 74) return "right";
-    };
+        DrawStart(canvas, selfX, selfY);
+    }, [dispatch, canvas]);
 
     useEffect(() => {
         if (overTile && !state.IsDragging) {
@@ -104,7 +88,7 @@ export const GameTile = ({
 
     return (
         <div ref={tile} style={style} className={`game-tile`}>
-            <div className={`game-tile-wrapper ${tileType}`}>
+            <div className={`game-tile-wrapper ${tileType} ${debugColor}`}>
                 { state.IsDragging && isActive &&
                     <div className={`tile-selected`} />
                 }

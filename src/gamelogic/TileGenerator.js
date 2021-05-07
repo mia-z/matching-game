@@ -1,7 +1,7 @@
 import TileTypeGenerator from "./TileTypeGenerator";
 
 export const TileGenerator = (tileWidth, tileHeight, x, y, joiningStyle = "dot") => {
-    let { iconPath, tileType } = TileTypeGenerator();
+    let { iconPath, tileType, debugColor } = TileTypeGenerator();
     return {
         width: tileWidth,
         height: tileHeight,
@@ -10,7 +10,8 @@ export const TileGenerator = (tileWidth, tileHeight, x, y, joiningStyle = "dot")
         isActive: false,
         joiningStyle: joiningStyle,
         iconPath, 
-        tileType
+        tileType,
+        debugColor
     }
 }
 

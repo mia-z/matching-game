@@ -2,12 +2,13 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import "./../styles/gameboard.scss";
 import GameTile from "./GameTile";
 import { ClearCanvas } from "./../gamelogic/OverlayControls";
+import Konva from "konva";
 
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
     const canvas = useRef(null);
 
-    const [canvasContext, setCanvasContext] = useState(null);
+    const [konva, setKonva] = useState(null);
 
     const startDragging = useCallback((e) => {
         dispatch({ type: "DRAG_START" });
@@ -15,8 +16,19 @@ export const GameBoard = ({state, dispatch, grid}) => {
 
     const stopDragging = useCallback((e) => {
         dispatch({ type: "DRAG_END" });
-        ClearCanvas(canvas.current);
-    }, [dispatch]);
+        ClearCanvas(konva);
+    }, [dispatch, konva]);
+
+    useEffect(() => {
+        let stage = new Konva.Stage({
+            container: canvas.current.id,
+            width: 606,
+            height: 726
+        });
+        let layer = new Konva.Layer();
+        stage.add(layer);
+        setKonva({ layer: layer, lines: [] });
+    }, []);
 
     useEffect(() => {
         board.current.addEventListener("mousedown", startDragging);
@@ -27,11 +39,11 @@ export const GameBoard = ({state, dispatch, grid}) => {
             board.current.removeEventListener("mouseup", stopDragging);
         }
     }, [startDragging, stopDragging]);
-    
+    console.log(konva);
     return (
         <div>
             <div id={"game-board-root"} className={""}>
-                <canvas ref={canvas} height={726} width={606} id={"overlay"} className={"overlay-canvas"} />
+                <div ref={canvas} height={726} width={606} id={"overlay"} className={"overlay-canvas"} />
                 <div ref={board} className={"game-board"}>
                 {
                     grid.map((outer, outerIndex, outerArray) => (
@@ -39,7 +51,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
                         {
                             outer.map((inner, innerIndex, innerArray) => (
                                 <React.Fragment key={`x-${innerIndex}`}>
-                                    <GameTile {...inner} canvas={canvas} state={state} dispatch={dispatch}/>
+                                    <GameTile {...inner} canvas={konva} state={state} dispatch={dispatch}/>
                                 </React.Fragment>
                             ))
                         }

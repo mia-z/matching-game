@@ -12,17 +12,25 @@
     .game-tile-wrapper {
         height: 100%;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    
-        &.purple {
-            @include glossy(#8e44ad, #9b59b6, #8e44ad);
+
+        &.grey {
+            @include glossy(#2d3436, #636e72, #2d3436);
         }
     
         &.blue {
-            @include glossy(#2980b9, #3498db, #2980b9);
+            @include glossy(#0984e3, #74b9ff, #0984e3);
         }
     
-        &.green {
-            @include glossy(#27ae60, #2ecc71, #27ae60);
+        &.red {
+            @include glossy(#d63031, #ff7675, #d63031);
+        }
+
+        &.yellow {
+            @include glossy(#fdcb6e, #ffeaa7, #fdcb6e);
+        }
+
+        &.white {
+            @include glossy(#b2bec3, #dfe6e9, #b2bec3);
         }
 
         .tile-selected {
@@ -36,6 +44,7 @@
             height: 100%;
             width: 100%;
             pointer-events: none;
+            display: none; //REMEMBER TO DISABLE THIS
         }
     }
     
