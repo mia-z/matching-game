@@ -4,7 +4,6 @@ export const TileDeactivator = (grid) => {
             return {
                 ...inner,
                 isActive: false,
-                joiningStyle: "dot"
             }
         })
     });

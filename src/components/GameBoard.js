@@ -16,7 +16,6 @@ export const GameBoard = ({state, dispatch, grid}) => {
     }, [dispatch]);
 
     const stopDragging = useCallback((e) => {
-        dispatch({ type: "DRAG_END" });
         ClearCanvas(konva);
         EndTurnChecker(state, dispatch);
     }, [dispatch, konva, state]);

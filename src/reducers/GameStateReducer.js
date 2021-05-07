@@ -1,6 +1,3 @@
-import TileReplacer from "../gamelogic/TileReplacer";
-import TileDeactivator from "../gamelogic/TileDeactivator";
-
 export const GameStateReducer = (state, action) => {
     switch(action.type) {
         case "SET_START_TILE": 
@@ -64,8 +61,12 @@ export const GameStateReducer = (state, action) => {
             StartTile: { x: -1, y: -1 },
             CurrentTile: { x: -1, y: -1 },
             StartTileType: "none",
-            SelectedTiles: [],
-            GameGrid: state.SelectedTiles.length > 2 ? TileReplacer(state.GameGrid, state.SelectedTiles, state.Score.BaseDamage) : TileDeactivator(state.GameGrid)
+            SelectedTiles: []
+        }
+
+        case "UPDATE_GRID": return {
+            ...state,
+            GameGrid: action.payload
         }
 
         case "UPDATE_STAT": {
