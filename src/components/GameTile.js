@@ -30,7 +30,7 @@ export const GameTile = ({
 
     const mouseLeaveHandler = useCallback(({ offsetX, offsetY, target: { clientWidth, clientHeight } }) => {
         let direction = GetExitDirection(offsetX, offsetY, clientHeight, clientWidth);
-console.log(offsetX, offsetY);
+
         let nextCoords = NextCoordinatesFromDirection(selfX, selfY, direction);
 
         let nextTileReturnCode = CheckNextTile(selfX, selfY, nextCoords.x, nextCoords.y, tileType, state.GameGrid, state.SelectedTiles);
@@ -88,7 +88,7 @@ console.log(offsetX, offsetY);
 
     return (
         <div ref={tile} style={style} className={`game-tile`}>
-            <div className={`game-tile-wrapper ${tileType} ${debugColor}`}>
+            <div className={`game-tile-wrapper ${tileType}`}>
                 { state.IsDragging && isActive &&
                     <div className={`tile-selected`} />
                 }
