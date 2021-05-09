@@ -1,0 +1,19 @@
+@mixin glossy($darker, $lighter, $border) {
+    background: $darker;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(31%,$darker), color-stop(100%,$lighter));
+    background: -webkit-linear-gradient(top,  $darker 31%,$lighter 100%);
+    background: -moz-linear-gradient(top,  $darker 31%, $lighter 100%);
+    background: -o-linear-gradient(top,  $darker 31%, $lighter 100%);
+    background: -ms-linear-gradient(top,  $darker 31%, $lighter 100%);
+    background: linear-gradient(to bottom,  $darker 31%, $lighter 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$darker', endColorstr='$lighter',GradientType=0);
+   
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+   
+    border: 1px solid $border;
+
+    -webkit-box-shadow:  0px 1px 3px 0px rgba(0, 0, 0, .2);    
+    box-shadow:  0px 1px 3px 0px rgba(0, 0, 0, .2);
+}

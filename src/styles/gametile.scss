@@ -1,0 +1,64 @@
+@import "./mixins";
+
+.game-tile {
+    position: relative;
+    padding: 2px;
+    border-radius: 6px;
+
+    &:hover {
+        border: 2px solid #ecf0f1;
+    } 
+
+    .game-tile-wrapper {
+        height: 100%;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+        
+
+        .tile-selected {
+            position: absolute;
+            background-color: #ecf0f1;
+            z-index: 10;
+            border-radius: 25px;
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        &.enemy {
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 15px;
+                height: 90%;
+                border-radius: 20px;
+                background-color: rgba(99, 110, 114, 0.9);
+            }
+        }
+
+        .enemy-health {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: #00cec9;
+            font-size: 1.5rem;
+
+            
+        }
+
+        .enemy-damage {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            color: #e17055;
+            font-size: 1.5rem;
+        }
+    }
+    
+}
