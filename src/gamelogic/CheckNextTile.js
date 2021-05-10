@@ -10,27 +10,22 @@ export const CheckNextTile = (selfX, selfY, nextX, nextY, type, grid, existingTi
         case "sword":
         case "enemy": 
             if (grid[nextY][nextX].tileType === "sword" || grid[nextY][nextX].tileType === "enemy") {
-                console.log("match");
                 return 1 //Is a match
             }
         case "shield": 
             if (grid[nextY][nextX].tileType === type) {
-                console.log("match");
                 return 1 //Is a match
             }
         case "coin": 
             if (grid[nextY][nextX].tileType === type) {
-                console.log("match");
                 return 1 //Is a match
             }
         case "health-potion": 
             if (grid[nextY][nextX].tileType === type) {
-                console.log("match");
                 return 1 //Is a match
             }
     }
     
-    console.log("no match");
     return 0; //No match
 }
 

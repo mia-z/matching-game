@@ -2,8 +2,11 @@ import TileDeactivator from "../gamelogic/TileDeactivator";
 import ReplaceNullTiles from "./ReplaceNullTiles";
 import TileGenerator from "./TileGenerator";
 export const EndTurnChecker = (state, dispatch) => {
+<<<<<<< HEAD
     console.log(state);
 
+=======
+>>>>>>> mobileAdaption
     let newGrid = state.GameGrid;
 
     if (state.SelectedTiles.length < 3) {
@@ -13,8 +16,11 @@ export const EndTurnChecker = (state, dispatch) => {
 
     let turnType = state.SelectedTiles[0].tileType; //Gets the first tile used (in the current case this determines what kind of action/turn is performed)
     
+<<<<<<< HEAD
     console.log(turnType);
 
+=======
+>>>>>>> mobileAdaption
     switch(turnType) {
         case "sword":
         case "enemy":
@@ -26,10 +32,16 @@ export const EndTurnChecker = (state, dispatch) => {
                         if (tile.isEnemy) {
                             let swords = state.SelectedTiles.filter(x => x.tileType === "sword").length;
                             let totalDamage =  state.Score.BaseDamage + swords; 
+<<<<<<< HEAD
                             console.log(totalDamage);
                             let newHp = tile.enemyHealth - totalDamage;
                             if (newHp <= 0)
                                 return TileGenerator(tile.width, tile.height, tile.selfX, tile.selfY);
+=======
+                            let newHp = tile.enemyHealth - totalDamage;
+                            if (newHp <= 0)
+                                return TileGenerator(tile.sideLength, tile.selfX, tile.selfY);
+>>>>>>> mobileAdaption
                             else {
                                 return {
                                     ...tile,
@@ -37,7 +49,11 @@ export const EndTurnChecker = (state, dispatch) => {
                                 }
                             }
                         } else
+<<<<<<< HEAD
                             return TileGenerator(tile.width, tile.height, tile.selfX, tile.selfY);
+=======
+                            return TileGenerator(tile.sideLength, tile.selfX, tile.selfY);
+>>>>>>> mobileAdaption
                     }
                 })
             });
@@ -54,6 +70,10 @@ export const EndTurnChecker = (state, dispatch) => {
                 type: "UPDATE_STAT",
                 payload: { key: "Armour", value: newArmour }
             });
+<<<<<<< HEAD
+=======
+            break;
+>>>>>>> mobileAdaption
 
         case "coin": 
             let newCoin = state.Score.Gold + state.SelectedTiles.length;
@@ -61,6 +81,10 @@ export const EndTurnChecker = (state, dispatch) => {
                 type: "UPDATE_STAT",
                 payload: { key: "Gold", value: newCoin }
             });
+<<<<<<< HEAD
+=======
+            break;
+>>>>>>> mobileAdaption
 
         case "health-potion": 
             let newHealth = state.Score.Health + state.SelectedTiles.length;
@@ -70,6 +94,7 @@ export const EndTurnChecker = (state, dispatch) => {
                 type: "UPDATE_STAT",
                 payload: { key: "Health", value: newHealth }
             });
+<<<<<<< HEAD
 
         default: newGrid = newGrid.map(inner => {
             return inner.map(tile => {
@@ -81,6 +106,24 @@ export const EndTurnChecker = (state, dispatch) => {
         }
 
     dispatch({ type: "UPDATE_GRID", payload: newGrid });
+=======
+            break;
+        }
+
+    //do enemy damage
+
+
+    //replace the tiles that were used in SelectedTiles
+    newGrid = newGrid.map(inner => {
+        return inner.map(tile => {
+            if (!state.SelectedTiles.some(x => x === tile)) 
+                return tile; //Do nothing since this tile isnt part of the active set
+            return TileGenerator(tile.sideLength, tile.selfX, tile.selfY);
+            })
+        })
+
+    dispatch({ type: "UPDATE_GRID", payload: newGrid }); //commit the final new grid to the state/ui
+>>>>>>> mobileAdaption
 
     dispatch({ type: "DRAG_END" });  //Reset tiles to inactive state and restore any that need restoring
 }

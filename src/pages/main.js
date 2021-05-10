@@ -5,12 +5,13 @@ import "./../styles/bootstrap-variants.scss";
 import { InitialGameState } from "./../InitialGameState";
 import GameBoard from "../components/GameBoard";
 import InfoBox from "../components/InfoBox";
+import { KonvaProvider } from "./../KonvaStore";
 
 const Main = () => {
     const [gameState, gameDispatch] = useReducer(GameStateReducer, InitialGameState);
 
     return (
-        <>
+        <KonvaProvider>
             <div className={"debug-box flex flex-col"}>
                 {
                     gameState.IsDragging ? 
@@ -35,7 +36,7 @@ const Main = () => {
             <div className={"mx-auto container flex justify-center"}>
                 <InfoBox score={gameState.Score} dispatch={gameDispatch} />
             </div>
-        </>   
+        </KonvaProvider>   
     )
 }
 

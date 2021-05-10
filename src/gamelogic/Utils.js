@@ -1,5 +1,4 @@
 export const NextCoordinatesFromDirection = (x, y, direction) => {
-    console.log(x, y, direction);
     switch(direction) {
         case "up": return { x: x, y: y - 1 };
         case "right": return { x: x + 1, y: y };
@@ -13,37 +12,37 @@ export const NextCoordinatesFromDirection = (x, y, direction) => {
     }
 }
 
-export const GetExitDirection = (x, y, width = 75, height = 60) => {
+export const GetExitDirection = (x, y, sideLength) => {
     if (y <= -0.5) {
-        if (x <= 20) 
+        if (x <= sideLength*0.15) 
             return "left-up";
-        else if (x >= 70) 
+        else if (x >= sideLength - (sideLength*0.15)) 
             return "right-up";
         else
             return "up";
     }
 
-    if (y > 89) {
-        if (x <= 20) 
+    if (y > sideLength - 1) {
+        if (x <= sideLength*0.15) 
             return "left-down";
-        else if (x >= 70) 
+        else if (x >= sideLength - (sideLength*0.15)) 
             return "right-down";
         else
             return "down";
     }
 
     if (x <= -0.5) {
-        if (y <= 20) 
+        if (y <= sideLength*0.15) 
             return "left-up";
-        else if (y >= 70) 
+        else if (y >= sideLength - (sideLength*0.15)) 
             return "left-down";
         else
             return "left";
     }
-    if (x > 89) {
-        if (y <= 20) 
+    if (x > sideLength - 1) {
+        if (y <= sideLength*0.15) 
             return "right-up";
-        else if (y >= 70) 
+        else if (y >= sideLength - (sideLength*0.15)) 
             return "right-down";
         else
             return "right";

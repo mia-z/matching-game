@@ -1,15 +1,15 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useContext, useCallback } from "react";
 import "./../styles/gameboard.scss";
 import GameTile from "./GameTile";
 import { ClearCanvas } from "./../gamelogic/OverlayControls";
 import Konva from "konva";
 import EndTurnChecker from "../gamelogic/EndTurnChecker";
+import KonvaStore from "./../KonvaStore";
 
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
-    const canvas = useRef(null);
 
-    const [konva, setKonva] = useState(null);
+    const { konva, InitKonva } = useContext(KonvaStore);
 
     const startDragging = useCallback((e) => {
         dispatch({ type: "DRAG_START" });
@@ -21,14 +21,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
     }, [dispatch, konva, state]);
 
     useEffect(() => {
-        let stage = new Konva.Stage({
-            container: canvas.current.id,
-            width: 726,
-            height: 726
-        });
-        let layer = new Konva.Layer();
-        stage.add(layer);
-        setKonva({ layer: layer, lines: [] });
+        InitKonva();
     }, []);
 
     useEffect(() => {
@@ -44,7 +37,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
     return (
         <div>
             <div id={"game-board-root"} className={""}>
-                <div ref={canvas} height={726} width={726} id={"overlay"} className={"overlay-canvas"} />
+                <div height={726} width={726} id={"overlay"} className={"overlay-canvas"} />
                 <div ref={board} className={"game-board"}>
                 {
                     grid.map((outer, outerIndex, outerArray) => (
@@ -52,7 +45,7 @@ export const GameBoard = ({state, dispatch, grid}) => {
                         {
                             outer.map((inner, innerIndex, innerArray) => (
                                 <React.Fragment key={`x-${innerIndex}`}>
-                                    <GameTile {...inner} canvas={konva} state={state} dispatch={dispatch}/>
+                                    <GameTile {...inner} state={state} dispatch={dispatch}/>
                                 </React.Fragment>
                             ))
                         }

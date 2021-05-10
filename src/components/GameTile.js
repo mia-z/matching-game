@@ -1,53 +1,54 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef, useContext } from "react";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 import "./../styles/gametile.scss";
 import { NextCoordinatesFromDirection, GetExitDirection } from "./../gamelogic/Utils";
 import { DrawStart, DrawJoiningLine, RemoveJoiningLine } from "./../gamelogic/OverlayControls";
+import KonvaStore from "./../KonvaStore";
 
 export const GameTile = ({ 
-        width, 
-        height, 
+        sideLength,
         selfX, 
         selfY, 
         isActive, 
         tileType, 
         state, 
         dispatch, 
-        canvas,
         iconPath,
         debugColor,
         isEnemy,
         enemyHealth,
-        enemyDamage
+        enemyDamage,
     }) => {
+
+    const { konva } = useContext(KonvaStore);
 
     const [overTile, setOverTile] = useState(false);
 
     const tile = useRef(null);
 
     const style = {
-        width: width,
-        height: height
+        width: sideLength,
+        height: sideLength
     };
 
     const mouseLeaveHandler = useCallback(({ offsetX, offsetY, target: { clientWidth, clientHeight } }) => {
-        let direction = GetExitDirection(offsetX, offsetY, clientHeight, clientWidth);
+        let direction = GetExitDirection(offsetX, offsetY, sideLength);
 
         let nextCoords = NextCoordinatesFromDirection(selfX, selfY, direction);
 
         let nextTileReturnCode = CheckNextTile(selfX, selfY, nextCoords.x, nextCoords.y, tileType, state.GameGrid, state.SelectedTiles);
 
         if (nextTileReturnCode === 2) {
-            RemoveJoiningLine(canvas, selfX, selfY, nextCoords.x, nextCoords.y, direction);
+            RemoveJoiningLine(konva);
             return dispatch({ type: "REMOVE_JOINING_TILE", payload: { x: selfX, y: selfY } }); 
         }
 
         if (nextTileReturnCode === 1) {
-            DrawJoiningLine(canvas, selfX, selfY, nextCoords.x, nextCoords.y);
+            DrawJoiningLine(konva, nextCoords.x, nextCoords.y, sideLength);
             return dispatch({ type: "ADD_JOINING_TILE", payload: { x: nextCoords.x, y: nextCoords.y } }); 
         }
 
-    }, [tile, state, dispatch, selfX, selfY, tileType]);
+    }, [tile, state, dispatch, selfX, selfY, tileType, konva]);
 
     const mouseEnterHandler = useCallback((e) => {
 
@@ -55,8 +56,8 @@ export const GameTile = ({
 
     const mouseClickHandler = useCallback((e) => {
         dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY } });
-        DrawStart(canvas, selfX, selfY);
-    }, [dispatch, canvas]);
+        DrawStart(konva, selfX, selfY, sideLength);
+    }, [dispatch, konva]);
 
     useEffect(() => {
         if (overTile && !state.IsDragging) {
