@@ -6,7 +6,7 @@ const TILE_WIDTH = 119.0;
 const getWidthOffset = (offset, sideLength) => (offset * sideLength) + (sideLength*1.0 / 2) + (0.5 * offset);
 const getHeightOffset = (offset, sideLength) => (offset * sideLength) + (sideLength*1.0 / 2) + (0.5 * offset);
 
-export const DrawStart = (k, set, drawStartX, drawStartY, sideLength) => {
+export const DrawStart = (k, drawStartX, drawStartY, sideLength) => {
     let layer = new Konva.Layer();
 
     let circle = new Konva.Circle({
@@ -37,7 +37,7 @@ export const DrawStart = (k, set, drawStartX, drawStartY, sideLength) => {
     k.add(layer);
 }
 
-export const DrawJoiningLine = (k, set, drawEndX, drawEndY, sideLength) => {
+export const DrawJoiningLine = (k, drawEndX, drawEndY, sideLength) => {
     let layer = k.getLayers()[0];
 
     let outline = layer.getChildren(x => x.getClassName() === "Line")[0];
@@ -49,7 +49,7 @@ export const DrawJoiningLine = (k, set, drawEndX, drawEndY, sideLength) => {
     layer.draw();
 }
 
-export const RemoveJoiningLine = (k, set) => {
+export const RemoveJoiningLine = (k) => {
     let layer = k.getLayers()[0];
 
     let outline = layer.getChildren(x => x.getClassName() === "Line")[0];
@@ -64,7 +64,7 @@ export const RemoveJoiningLine = (k, set) => {
     layer.draw();
 }
 
-export const ClearCanvas = (k, set) => {
+export const ClearCanvas = (k) => {
     let layer = k.getLayers()[0];
     layer.destroy();
 }

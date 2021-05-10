@@ -589,9 +589,6 @@ video {
 		max-width: 1536px;
 	}
 }
-.static {
-	position: static;
-}
 .mx-auto {
 	margin-left: auto;
 	margin-right: auto;

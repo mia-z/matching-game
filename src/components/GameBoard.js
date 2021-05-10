@@ -9,16 +9,16 @@ import KonvaStore from "./../KonvaStore";
 export const GameBoard = ({state, dispatch, grid}) => {
     const board = useRef(null);
 
-    const { konva, UpdateKonva, InitKonva } = useContext(KonvaStore);
+    const { konva, InitKonva } = useContext(KonvaStore);
 
     const startDragging = useCallback((e) => {
         dispatch({ type: "DRAG_START" });
     }, [dispatch]);
 
     const stopDragging = useCallback((e) => {
-        ClearCanvas(konva, UpdateKonva);
+        ClearCanvas(konva);
         EndTurnChecker(state, dispatch);
-    }, [dispatch, konva, UpdateKonva, state]);
+    }, [dispatch, konva, state]);
 
     useEffect(() => {
         InitKonva();

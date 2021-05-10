@@ -15,13 +15,8 @@ export const KonvaProvider = ({ children }) => {
         setKonva(stage);
     }
 
-    const UpdateKonva = useCallback((k) => {
-        console.log(k.getChildren());
-        setKonva(k);
-    }, [konva]);
-
     return (
-        <KonvaStore.Provider value={{ konva: konva, UpdateKonva: UpdateKonva, InitKonva: InitKonva }}>
+        <KonvaStore.Provider value={{ konva: konva, InitKonva: InitKonva }}>
             {children}
         </KonvaStore.Provider>
     );
