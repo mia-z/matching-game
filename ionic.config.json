@@ -1,0 +1,7 @@
+{
+    "name": "tiledungeon",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Image } from "react-konva";
+import { Image, Group, Text } from "react-konva";
 import useImage from "use-image";
 
 export const GameTileTwo = ({
@@ -45,8 +45,7 @@ export const GameTileTwo = ({
     }, [touchEndHandler]);
 
     return (
-        <Image 
-            image={icon} 
+        <Group 
             x={selfX * sideLength} 
             y={selfY * sideLength}
             width={sideLength} 
@@ -54,7 +53,11 @@ export const GameTileTwo = ({
             onTouchMove={handleTouchMove}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-        />
+        >
+            <Image image={icon} />
+
+        </Group>
+        
     );
 }
 
