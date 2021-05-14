@@ -8,6 +8,8 @@ import Konva from "konva";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 
 const windowOffset = window.innerWidth - (window.innerWidth - (720 / 2) - 46);
+const length = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
+const tileSize = length /  6;
 
 export const GameBoard = ({ state, dispatch }) => {
     const handleTouchStart = useCallback((e) => {
@@ -42,7 +44,7 @@ export const GameBoard = ({ state, dispatch }) => {
     }, [state, dispatch]);
 
     return (
-        <Stage height={725} width={725}>
+        <Stage height={length} width={length}>
             <Layer>
                 {
                     state.GameGrid.map((outer, outerIndex, outerArray) => (
@@ -60,8 +62,8 @@ export const GameBoard = ({ state, dispatch }) => {
                 {   state.LinePoints.length > 0 &&
                     <Group>
                         <Line 
-                            x={60} 
-                            y={60}
+                            x={tileSize / 2} 
+                            y={tileSize / 2}
                             points={state.LinePoints}
                             stroke={"black"}
                             tension={0.05}
@@ -71,8 +73,8 @@ export const GameBoard = ({ state, dispatch }) => {
                             hitStrokeWidth={0}
                         />
                         <Line 
-                            x={60} 
-                            y={60}
+                            x={tileSize / 2} 
+                            y={tileSize / 2}
                             points={state.LinePoints}
                             stroke={"white"}
                             tension={0.05}
@@ -84,26 +86,33 @@ export const GameBoard = ({ state, dispatch }) => {
                     </Group>
                 }
                 {   state.CurrentTile.x >= 0 && state.CurrentTile.y >= 0 &&
-                    <Group x={state.CurrentTile.x * 120} y={state.CurrentTile.y * 120} onTouchEnd={handleTouchEnd}>
+                    <Group x={state.CurrentTile.x * tileSize} y={state.CurrentTile.y * tileSize} onTouchEnd={handleTouchEnd}>
                         <Circle
                             radius={35}
                             x={0}
                             y={0}
+                            stroke={"red"}
                         />
                         <Circle
                             radius={35}
-                            x={120}
+                            x={tileSize}
                             y={0}
+                            stroke={"red"}
+
                         />
                         <Circle
                             radius={35}
                             x={0}
-                            y={120}
+                            y={tileSize}
+                            stroke={"red"}
+
                         />
                         <Circle
                             radius={35}
-                            x={120}
-                            y={120}
+                            x={tileSize}
+                            y={tileSize}
+                            stroke={"red"}
+
                         />
                     </Group>
                 }

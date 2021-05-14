@@ -1,3 +1,6 @@
+const length = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
+const tileSize = length /  6;
+
 export const GameStateReducer = (state, action) => {
     switch(action.type) {
         case "SET_START_TILE": 
@@ -12,7 +15,7 @@ export const GameStateReducer = (state, action) => {
             CurrentTile: action.payload,
             LastSelectedTile: action.payload,
             StartTileType: action.payload.tileType,
-            LinePoints: [ action.payload.x * 120, action.payload.y * 120 ],
+            LinePoints: [ action.payload.x * tileSize, action.payload.y * tileSize ],
             SelectedTiles: [ ...state.SelectedTiles, newGridWithStart[action.payload.y][action.payload.x] ]
         }
 
@@ -32,7 +35,7 @@ export const GameStateReducer = (state, action) => {
                 LastSelectedTile: action.payload,
                 GameGrid: gridWithNewTile,
                 SelectedTiles: [ ...state.SelectedTiles, gridWithNewTile[action.payload.y][action.payload.x] ],
-                LinePoints: [ ...state.LinePoints, action.payload.x * 120, action.payload.y * 120 ],
+                LinePoints: [ ...state.LinePoints, action.payload.x * tileSize, action.payload.y * tileSize ],
             }
         
         case "REMOVE_JOINING_TILE": 

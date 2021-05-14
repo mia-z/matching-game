@@ -1,6 +1,8 @@
 import TileGenerator from "./TileGenerator";
 
-export const GridGenerator = (square = 6, boardHeight = 720, boardWidth = 720) => {
+const length = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
+
+export const GridGenerator = (square = 6, boardHeight = 720, boardWidth = length) => {
     let grid = Array.from(Array(square), () => new Array(square));
 
     let sideLength = boardWidth / square;
