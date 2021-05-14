@@ -1,6 +1,6 @@
 import TileTypeGenerator from "./TileTypeGenerator";
 
-export const TileGenerator = (sideLength, x, y, type) => {
+export const TileGenerator = (sideLength, x, y, type, id) => {
     let { iconPath, tileType, debugColor, isEnemy, enemyDamage, enemyHealth } = TileTypeGenerator(type);
     return {
         sideLength: sideLength,
@@ -12,7 +12,8 @@ export const TileGenerator = (sideLength, x, y, type) => {
         debugColor,
         isEnemy,
         enemyDamage,
-        enemyHealth
+        enemyHealth,
+        id: id
     }
 }
 

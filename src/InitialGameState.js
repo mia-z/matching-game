@@ -4,9 +4,11 @@ export const InitialGameState = {
     GameGrid: GridGenerator(),
     StartTile: { x: -1, y: -1 },
     CurrentTile: { x: -1, y: -1 },
+    LastSelectedTile: { x: -1, y: -1 },
     StartTileType: "none",
     IsDragging: false,
     SelectedTiles: [],
+    LinePoints: [],
     Score: {
         Gold: 0,
         Experience: 0,

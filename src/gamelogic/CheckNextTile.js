@@ -1,4 +1,7 @@
 export const CheckNextTile = (selfX, selfY, nextX, nextY, type, grid, existingTiles) => {
+    if (nextX > selfX + 1 || nextX < selfX - 1 || nextY > selfY + 1 || nextY < selfY - 1)
+        return 0; //Not adjacent
+
     if (existingTiles.some(x => x.selfX === nextX && x.selfY === nextY)) {
         let previousTileIndex = existingTiles.length - 1;
         if (existingTiles[previousTileIndex].selfX === selfX && existingTiles[previousTileIndex].selfY === selfY) {

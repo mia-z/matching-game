@@ -2,7 +2,7 @@ import RandomNumberGenerator from "./RandomNumberGenerator";
 import * as icon from "./../IconRepo";
 
 export const TileTypeGenerator = (t) => {
-    let type = t || RandomNumberGenerator(1, 6);
+    let type = t > -1 ? t : RandomNumberGenerator(1, 6);
     switch (type) {
         case 1: return {
             tileType: "sword", 

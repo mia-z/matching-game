@@ -3,7 +3,6 @@ import Main from "./pages/main";
 import "./styles/base.scss";
 
 const App = () => {
-
     return(
         <Main />
     )

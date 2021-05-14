@@ -67,24 +67,24 @@ export const GameTile = ({
 
     useEffect(() => {
         if (!state.IsDragging) {
-            tile.current.addEventListener("pointerdown", mouseClickHandler);
+            //tile.current.addEventListener("pointerdown", mouseClickHandler);
         } 
 
         return () => {
             if (!state.IsDragging) {
-                tile.current.removeEventListener("pointerdown", mouseClickHandler);
+                //tile.current.removeEventListener("pointerdown", mouseClickHandler);
             } 
         }
     }, [state.IsDragging, tile, mouseClickHandler]);
 
     useEffect(() => {
         if (state.CurrentTile.x === selfX && state.CurrentTile.y === selfY) {
-            tile.current.addEventListener("pointerleave", mouseLeaveHandler);
+            //tile.current.addEventListener("pointerleave", mouseLeaveHandler);
         }
 
         return () => {
             if (state.CurrentTile.x === selfX && state.CurrentTile.y === selfY) {
-                tile.current.removeEventListener("pointerleave", mouseLeaveHandler);
+                //tile.current.removeEventListener("pointerleave", mouseLeaveHandler);
             }
         }
     }, [state, selfX, selfY, mouseLeaveHandler]);

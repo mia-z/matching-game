@@ -1,4 +1,4 @@
-export const NextCoordinatesFromDirection = (x, y, direction) => {
+export const NextTileOffsetFromDirection = (x, y, direction) => {
     switch(direction) {
         case "up": return { x: x, y: y - 1 };
         case "right": return { x: x + 1, y: y };
@@ -13,7 +13,7 @@ export const NextCoordinatesFromDirection = (x, y, direction) => {
 }
 
 export const GetExitDirection = (x, y, sideLength) => {
-    if (y <= -0.5) {
+    if (y <= 2) {
         if (x <= sideLength*0.15) 
             return "left-up";
         else if (x >= sideLength - (sideLength*0.15)) 
@@ -22,7 +22,7 @@ export const GetExitDirection = (x, y, sideLength) => {
             return "up";
     }
 
-    if (y > sideLength - 1) {
+    if (y > sideLength - 4) {
         if (x <= sideLength*0.15) 
             return "left-down";
         else if (x >= sideLength - (sideLength*0.15)) 
@@ -31,7 +31,7 @@ export const GetExitDirection = (x, y, sideLength) => {
             return "down";
     }
 
-    if (x <= -0.5) {
+    if (x <= 2) {
         if (y <= sideLength*0.15) 
             return "left-up";
         else if (y >= sideLength - (sideLength*0.15)) 
@@ -39,7 +39,7 @@ export const GetExitDirection = (x, y, sideLength) => {
         else
             return "left";
     }
-    if (x > sideLength - 1) {
+    if (x > sideLength - 4) {
         if (y <= sideLength*0.15) 
             return "right-up";
         else if (y >= sideLength - (sideLength*0.15)) 

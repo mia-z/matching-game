@@ -12,7 +12,8 @@ module.exports = merge(common, {
         hot: true,
         open: true,
         historyApiFallback: true,
-        port: 3000
+        port: 3000,
+        host: "0.0.0.0"
     },
     output: {
         filename: "[name].bundle.js",
