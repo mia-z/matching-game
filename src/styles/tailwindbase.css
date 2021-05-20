@@ -589,6 +589,9 @@ video {
 		max-width: 1536px;
 	}
 }
+.visible {
+	visibility: visible;
+}
 .mx-auto {
 	margin-left: auto;
 	margin-right: auto;
@@ -598,6 +601,9 @@ video {
 }
 .flex {
 	display: flex;
+}
+.table {
+	display: table;
 }
 .grid {
 	display: grid;

@@ -2,11 +2,12 @@ import React, { useRef, useEffect, useContext, useCallback } from "react";
 import "./../styles/gameboard.scss";
 import GameTileTwo from "./GameTileTwo";
 import EndTurnChecker from "../gamelogic/EndTurnChecker";
-import { Stage, Line, Layer, Circle, Group } from "react-konva";
+import { Stage, Line, Layer, Circle, Group, Image } from "react-konva";
 import { GetExitDirection, NextTileOffsetFromDirection } from "./../gamelogic/Utils";
 import Konva from "konva";
 import CheckNextTile from "./../gamelogic/CheckNextTile";
 import { Spring, animated } from "@react-spring/konva/index";
+import useImage from "use-image";
 
 const windowOffset = window.innerWidth - (window.innerWidth - (720 / 2) - 46);
 const length = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
@@ -16,12 +17,15 @@ export const GameBoard = ({ state, dispatch }) => {
     const trailOutline = useRef(null);
     const trailFill = useRef(null);
 
-    const handleTouchStart = useCallback((e) => {
-        const { selfX, selfY, tileType } = e;
-        dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY, tileType: tileType } });
-    }, [state, dispatch]);
+    const tileRefs = useRef(new Array());
 
-    const handleTileTouchMove = useCallback((e) => {
+    const touchStartHandler = useCallback((e) => {
+        const { selfX, selfY, tileType } = e;
+        console.log(e.ref);
+        dispatch({ type: "SET_START_TILE", payload: { x: selfX, y: selfY, tileType: tileType } });
+    }, [state, dispatch, tileRefs]);
+
+    const touchMoveHandler = useCallback((e) => {
         const { selfX, selfY } = e;
         const { LastSelectedTile } = state;
         
@@ -41,8 +45,12 @@ export const GameBoard = ({ state, dispatch }) => {
             case 2: return dispatch({ type: "REMOVE_JOINING_TILE", payload: { x: e.selfX, y: e.selfY } }); 
             default: throw new Error("INVALID RETURN RECEIVED @ CheckNextTile in GameBoard.handleTileTouchMove")
         }
-    }, [state, dispatch]);
+    }, [state, dispatch, tileRefs]);
     
+    const touchEndHandler = useCallback((e) => {
+        EndTurnChecker(state, dispatch, tileRefs);
+    }, [state, dispatch, tileRefs]);
+
     useEffect(() => {
         if (state.LinePoints.length > 2) {
             trailOutline.current.points([...state.LinePoints.slice(0, -2)]);
@@ -59,22 +67,38 @@ export const GameBoard = ({ state, dispatch }) => {
         }
     }, [state.LinePoints, trailOutline, trailFill])
 
-    const handleTouchEnd = useCallback((e) => {
-        EndTurnChecker(state, dispatch);
-    }, [state, dispatch]);
+    useEffect(() => {
+        console.log(tileRefs);
+    }, [tileRefs]);
 
     return (
         <Stage height={length} width={length}>
             <Layer>
                 {
                     state.GameGrid.map((outer, outerIndex, outerArray) => (
-                        <React.Fragment key={`y-${outerIndex}`}>
+                        <React.Fragment key={`${outerIndex}`}>
                             {
-                                outer.map((inner, innerIndex, innerArray) => (
-                                    <React.Fragment key={`x-${innerIndex}`}>
-                                        <GameTileTwo {...inner} touchStartHandler={handleTouchStart} touchEndHandler={handleTouchEnd} touchHandler={handleTileTouchMove} />
-                                    </React.Fragment>
-                                ))
+                                outer.map((inner, innerIndex, innerArray) => {
+                                    const getRef = (el) => (tileRefs.current[inner.id] = el)
+                                    const [icon] = useImage(inner.iconPath);
+                                    return(
+                                        <React.Fragment key={innerIndex}>
+                                            <Group 
+                                                id={`${innerIndex}${outerIndex}`}
+                                                ref={ref => getRef(ref)}
+                                                x={inner.selfX * inner.sideLength} 
+                                                y={inner.selfY * inner.sideLength}
+                                                width={inner.sideLength} 
+                                                height={inner.sideLength}
+                                                onTouchMove={(e) => touchMoveHandler({...e, ...inner, ref: tileRefs.current[inner.id]})}
+                                                onTouchStart={(e) => touchStartHandler({...e, ...inner, ref: tileRefs.current[inner.id]})}
+                                                onTouchEnd={(e) => touchEndHandler({...e, ...inner, ref: tileRefs.current[inner.id]})}
+                                            >
+                                                <Image image={icon} />
+                                            </Group>
+                                        </React.Fragment>
+                                    )
+                                })
                             }
                         </React.Fragment>
                     ))
@@ -110,7 +134,7 @@ export const GameBoard = ({ state, dispatch }) => {
                     </Group>
                 }
                 {   state.CurrentTile.x >= 0 && state.CurrentTile.y >= 0 &&
-                    <Group x={state.CurrentTile.x * tileSize} y={state.CurrentTile.y * tileSize} onTouchEnd={handleTouchEnd}>
+                    <Group x={state.CurrentTile.x * tileSize} y={state.CurrentTile.y * tileSize} onTouchEnd={touchEndHandler}>
                         <Circle
                             radius={35}
                             x={0}

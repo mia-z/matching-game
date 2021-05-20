@@ -4,6 +4,11 @@ import * as icon from "./../IconRepo";
 export const TileTypeGenerator = (t) => {
     let type = t > -1 ? t : RandomNumberGenerator(1, 6);
     switch (type) {
+        case 0: return {
+            tileType: "blank", 
+            iconPath: "blank",
+            debugColor: "purple"
+        };
         case 1: return {
             tileType: "sword", 
             iconPath: icon.Sword,

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, forwardRef } from "react";
 import { Image, Group, Text } from "react-konva";
 import useImage from "use-image";
 
@@ -46,6 +46,7 @@ export const GameTileTwo = ({
 
     return (
         <Group 
+            ref={ref}
             x={selfX * sideLength} 
             y={selfY * sideLength}
             width={sideLength} 
